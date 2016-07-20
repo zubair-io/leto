@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
+  <Identity Name="0f65b806-7911-4afd-bd29-363c5144d72f" Version="1.0.0.0" Publisher="CN=leto" />
+  <mp:PhoneIdentity PhoneProductId="0f65b806-7911-4afd-bd29-363c5144d72f" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Properties>
+    <DisplayName>Leto</DisplayName>
+    <PublisherDisplayName>leto</PublisherDisplayName>
+    <Logo>dist\www\assets\icons\StoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" StartPage="ms-appx-web:///dist/www/index_uwp.html">
+      <uap:VisualElements DisplayName="Leto" Description="Leto" BackgroundColor="transparent" Square150x150Logo="dist\www\assets\icons\Square150x150Logo.png" Square44x44Logo="dist\www\assets\icons\Square44x44Logo.png">
+        <uap:LockScreen Notification="badge" BadgeLogo="dist\www\assets\icons\BadgeLogo.png" />
+        <uap:DefaultTile Wide310x150Logo="dist\www\assets\icons\Wide310x150Logo.png" Square310x310Logo="dist\www\assets\icons\Square310x310Logo.png" Square71x71Logo="dist\www\assets\icons\Square71x71Logo.png">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo" />
+            <uap:ShowOn Tile="wide310x150Logo" />
+            <uap:ShowOn Tile="square310x310Logo" />
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile>
+        <uap:SplashScreen Image="dist\www\assets\icons\splashscreen.png" />
+      </uap:VisualElements>
+      <uap:ApplicationContentUriRules>
+        <uap:Rule Match="http://localhost:8181" Type="include" WindowsRuntimeAccess="none" />
+      </uap:ApplicationContentUriRules>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <Capability Name="privateNetworkClientServer" />
+    <Capability Name="internetClientServer" />
+  </Capabilities>
+</Package>

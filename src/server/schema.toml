@@ -1,0 +1,14 @@
+[collections.speed]
+indexes = [
+  "owner",
+  "datetime"
+]
+
+[groups.authenticated.rules.read_own_speed]
+template = "collection('users').find({id: userId()})"
+
+[groups.authenticated.rules.read_own_speed]
+template = "collection('speed').findAll({owner: userId()})"
+
+[groups.authenticated.rules.store_speed]
+template = "collection('speed').store({owner: userId(), datetime: any()})"

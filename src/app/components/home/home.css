@@ -1,0 +1,27 @@
+h1 {
+    font-size: 16px;
+    margin: auto;
+    font-weight: 300;
+    text-align: center;
+}
+p{
+    font-weight: 300;
+    font-size: 12px;
+    text-align: center;
+}
+
+h1 > a {
+    color: black;
+    text-decoration: none;
+}
+
+.logo{
+    width:15vw;
+    height:15vw;
+    background: url(assets/leto.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin: 50px auto;
+    background-position: center;
+
+}
