@@ -11,7 +11,8 @@
   "exclude": [
     "typings/main.d.ts",
     "typings/main",
-    "node_modules"
+    "node_modules",
+    "rethinkdb_data"
   ],
   "awesomeTypescriptLoaderOptions": {
     "forkChecker": true,

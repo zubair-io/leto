@@ -5,7 +5,7 @@ import * as moment from 'moment';
 @Component({
     selector: 'time',
     templateUrl: './time.html',
-    styleUrls: ['./time.css']
+    styleUrls: ['./time.scss']
 })
 
 export class TimeComponent implements OnInit {

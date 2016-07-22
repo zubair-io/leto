@@ -5,7 +5,7 @@ import {ResponseTimeService} from './responseTime.service'
 @Component({
     selector: 'response-time',
     templateUrl: './responseTime.html',
-    styleUrls: ['./responseTime.css'],
+    styleUrls: ['./responseTime.scss'],
     providers: [ResponseTimeService]
 })
 

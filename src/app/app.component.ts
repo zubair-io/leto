@@ -3,7 +3,7 @@ import {ROUTER_DIRECTIVES} from '@angular/router'
 
 @Component({
     selector: 'app',
-   styleUrls: ['./app.css'],
+   styleUrls: ['./app.scss'],
   templateUrl: './app.html',
     directives: [ROUTER_DIRECTIVES]
 

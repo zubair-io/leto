@@ -5,7 +5,7 @@ import {ResponseTimeComponent} from '../responseTime'
 @Component({
     selector: 'home',
     templateUrl: './home.html',
-    styleUrls: ['./home.css'],
+    styleUrls: ['./home.scss'],
     directives: [TimeComponent, ResponseTimeComponent]
 
 })
