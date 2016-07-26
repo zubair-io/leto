@@ -19,14 +19,14 @@ export class ResponseTimeComponent implements OnInit {
 
     }
     ngOnInit() {
-        this.getUser()
+        if (typeof (window) === 'object') {
+            this.getUser()
+        }
     }
-    getUser(){
-        console.log('g')
-        this._responseTimeService.getUser().subscribe((user)=>{
-            console.log(user)
-          this.getSpeed(user)
-          this.sendSpeed(user)
+    getUser() {
+        this._responseTimeService.getUser().subscribe((user) => {
+            this.getSpeed(user)
+            this.sendSpeed(user)
         })
     }
     getSpeed(user) {

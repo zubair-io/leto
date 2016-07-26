@@ -10,17 +10,21 @@ import * as moment from 'moment';
 
 export class TimeComponent implements OnInit {
 
-    time: string;
+    time = new Date()
 
     constructor() { }
     ngOnInit() {
-        setInterval(() => {
-            this.setTime();
-        }, 250)
+       
+         if (typeof (window) === 'object') {
+             setInterval(() => {
+                 this.setTime();
+             }, 250)
+        }
     }
 
     setTime() {
-        this.time = moment().format('MMMM Do YYYY, h:mm:ss a');
+        //this.time = moment().format('MMMM Do YYYY, h:mm:ss a');
+        this.time = new Date()
     }
 }
 

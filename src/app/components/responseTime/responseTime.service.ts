@@ -4,20 +4,23 @@ import {Observable} from 'rxjs';
 import * as Horizon from '@horizon/client';
 declare var API_URL: string
 export class ResponseTimeService {
-    horizon = Horizon({ authType: 'anonymous', host:API_URL });
-    
-    speed = this.horizon('speed');
+
+    horizon
+    speed
     user
 
 
-    constructor() { 
-        this.horizon.connect()
+    constructor() {
+        if (typeof (window) === 'object') {
+            this.horizon = Horizon({ authType: 'anonymous', host: API_URL });
+            this.speed = this.horizon('speed');
+            this.horizon.connect()
+        }
     }
 
     getSpeed(user) {
-        console.log(user)
         return this.speed
-            .findAll({ 'owner': user.id})
+            .findAll({ 'owner': user.id })
             .order('datetime', 'descending')
             .limit(1)
             .watch()
@@ -30,12 +33,12 @@ export class ResponseTimeService {
         })
 
     }
-    deleteSpeed (id) {
+    deleteSpeed(id) {
         setTimeout(() => {
             this.speed.remove({ id: id })
         }, 500)
     }
-    getUser() : Observable<[any]>{
+    getUser(): Observable<[any]> {
         return this.horizon.currentUser().fetch()
     }
 

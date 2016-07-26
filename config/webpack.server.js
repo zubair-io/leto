@@ -2,7 +2,7 @@ var webpack = require('webpack');
 var path = require('path')
 
 var server = {
-  //  context: __dirname,
+  context: path.join(__dirname, '../'),
   resolve: {
    // root: '/src',
 
@@ -11,10 +11,19 @@ var server = {
   module: {
     loaders: [
       // TypeScript
-      { test: /\.ts$/, loaders: ['awesome-typescript-loader'] },
-       {test: /\.html$/, loader: 'raw-loader' },
+      { test: /\.ts$/, loaders: ['awesome-typescript-loader', 'angular2-template-loader'] },
       { test: /\.css$/, loader: 'raw-loader' },
-      { test: /\.json$/, loader: 'raw-loader' }
+      { test: /\.json$/, loader: 'raw-loader' },
+      {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        loaders: ['raw-loader', 'sass-loader'] 
+      },
+      {
+        test: /\.html$/,
+        loader: 'raw-loader',
+        exclude: [path.join( __dirname, '../src/index.html')]
+      },
      
     ],
     preLoaders: [
@@ -37,8 +46,8 @@ var server = {
   },
   node: {
     global: true,
-    __dirname: false,
-    __filename: false,
+    __dirname: true,
+    __filename: true,
     process: true,
     Buffer: true
   }

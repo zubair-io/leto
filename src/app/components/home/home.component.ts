@@ -18,7 +18,9 @@ export class HomeComponent {
     constructor() { }
 
     ngOnInit() {
-        this.startWordshow()
+        if (typeof (window) === 'object') {
+            this.startWordshow()
+        }
     }
     startWordshow() {
         let nextWord = this.currentWord + 1
