@@ -6,7 +6,6 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ScriptExtHtmlWebpackPlugin  = require('script-ext-html-webpack-plugin')
 var UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
-var ClosureCompilerPlugin = require('closure-compiler-webpack-plugin');
 
 var buildTime = Date.now() + ' ' + new Date() 
 var path = require('path');
