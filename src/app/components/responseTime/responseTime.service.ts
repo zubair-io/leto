@@ -12,7 +12,11 @@ export class ResponseTimeService {
 
     constructor() {
         if (typeof (window) === 'object') {
-            this.horizon = Horizon({ authType: 'anonymous', host: API_URL });
+            let settings = { authType: 'anonymous'}
+            if(API_URL !== '/'){
+                settings['host'] = API_URL
+            }
+            this.horizon = Horizon(settings);
             this.speed = this.horizon('speed');
             this.horizon.connect()
         }

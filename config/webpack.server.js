@@ -37,7 +37,7 @@ var server = {
   externals: checkNodeImport,
 
   target: 'node',
-  entry: './src/server', 
+  entry: './src/server-koa', 
   output: {
     path: './dist/server',
     libraryTarget: 'commonjs2',
@@ -46,7 +46,7 @@ var server = {
   },
   node: {
     global: true,
-    __dirname: true,
+    __dirname: false,
     __filename: true,
     process: true,
     Buffer: true
