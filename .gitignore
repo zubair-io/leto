@@ -64,3 +64,4 @@ npm-debug.log
 /bin
 /bld
 *.jsproj.user
+/tmp

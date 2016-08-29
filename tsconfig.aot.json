@@ -1,0 +1,21 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noImplicitAny": false,
+    "outDir": "./tmp/es6/",
+    "sourceMap": false,
+    "target": "es2015"
+  },
+
+  "files": [
+    "tmp/ts/main.aot.ts",
+    "tmp/ts/app/app.module.ts",
+    "tmp/ts/polyfills.ts",
+    "tmp/ts/vendor.ts"
+  ]
+}
