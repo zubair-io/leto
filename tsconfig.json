@@ -12,14 +12,17 @@
     "typings/main.d.ts",
     "typings/main",
     "node_modules",
-    "rethinkdb_data"
+    "rethinkdb_data",
+    "dist",
+    "tmp"
   ],
   "awesomeTypescriptLoaderOptions": {
     "forkChecker": true,
-        "useWebpackText": true
-
+    "useWebpackText": true
   },
   "compileOnSave": false,
   "buildOnSave": false,
-  "atom": { "rewriteTsconfig": false }
+  "atom": {
+    "rewriteTsconfig": false
+  }
 }

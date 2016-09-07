@@ -1,95 +1,92 @@
-var webpack = require('webpack');
-var CompressionPlugin = require('compression-webpack-plugin');
-var DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
-var WebpackMd5Hash = require('webpack-md5-hash');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ScriptExtHtmlWebpackPlugin  = require('script-ext-html-webpack-plugin')
-var UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
+'use strict'
+const webpack = require('webpack');
+const CompressionPlugin = require('compression-webpack-plugin');
+const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
+const WebpackMd5Hash = require('webpack-md5-hash');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
+const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
+const ClosureCompiler = require('google-closure-compiler-js').webpack;
+const BabiliPlugin = require("babili-webpack-plugin");
 
-var buildTime = Date.now() + ' ' + new Date() 
-var path = require('path');
+const buildTime = Date.now() + ' ' + new Date()
+const path = require('path');
 const METADATA = {
 };
 
-
-// Our Webpack Defaults
-var webpackConfig = {
-  metadata: METADATA,
+module.exports = {
   entry: {
     'polyfills': './tmp/es6/polyfills.js',
-    'vendor':    './tmp/es6/vendor.aot.js',
-    'main':       './tmp/es6/main.aot.js',
+    'vendor': './tmp/es6/vendor.aot.js',
+    'main': './tmp/es6/main.aot.js',
   },
   devtool: 'cheap-module-source-map',
   cache: true,
   debug: true,
   output: {
-    path: './dist/aot',
+    path: './dist/www',
     filename: '[name].[chunkhash].bundle.js',
     sourceMapFilename: '[name].[chunkhash].map',
     chunkFilename: '[id].[chunkhash].chunk.js'
   },
 
-  resolve: {
-    root: [ path.join(__dirname, 'tmp/es6') ],
-    extensions: ['', '.ts', '.js', '.json']
-  },
-
-  devServer: {
-    historyApiFallback: true,
-    watchOptions: { aggregateTimeout: 300, poll: 1000 }
-  },
-   module: {
+  module: {
     loaders: [
-            { test: /\.js$/,
-    exclude: /(node_modules|bower_components)/,
-    loader: 'babel', // 'babel-loader' is also a legal name to reference 
-    query: {
-      presets: ['es2015']
-    } },
-
-      // .ts files for TypeScript
-      { test: /\.ts$/, loaders: ['awesome-typescript-loader', 'angular2-template-loader'] },
-      { test: /\.css$/, loaders: ['to-string-loader', 'css-loader?-url'] },
       {
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        loaders: ['raw-loader', 'sass-loader'] 
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel', // 'babel-loader' is also a legal name to reference
+        query: {
+          presets: ['latest']
+        }
       },
-      { test: /\.json$/, loader: 'json-loader' },
+      // {
+      //   test: /\.ts$/,
+      //   loader: 'ts',
+      //   query: {
+      // 				tsconfig: 'tsconfig.webpack.json'
+      // 			}
 
+      // },
       {
         test: /\.html$/,
         loader: 'raw-loader',
-        exclude: [path.join( __dirname, './src/index.html')]
+        exclude: [path.join(__dirname, './src/index.html')]
       },
+      //     {
+      //   test: /\.json$/,
+      //   loader: "json-loader"
+      // }
     ]
   },
 
-  node: {
-    global: 1,
-    crypto: 'empty',
-    module: 0,
-    Buffer: 0,
-    clearImmediate: 0,
-    setImmediate: 0
+  resolve: {
+    root: [path.join(__dirname, 'app')],
+    extensions: ['', '.ts', '.js']
   },
 
+
+
+
+
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(true),
+    new webpack.optimize.OccurrenceOrderPlugin(true),
     new webpack.optimize.CommonsChunkPlugin({ name: ['main', 'vendor', 'polyfills'], minChunks: Infinity }),
     new WebpackMd5Hash(),
-    new DedupePlugin(),
+    // new DedupePlugin(),
     new CopyWebpackPlugin([{
       from: 'src/assets',
       to: 'assets'
     }]),
+
+    new BabiliPlugin(),
+
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       inject: true,
-      showErrors:true,
-      chunksSortMode: 'none',
+      showErrors: true,
+      chunksSortMode: 'dependency',
       buildTime: buildTime,
       baseScript: `<script>
                       var API_URL = '/'
@@ -99,8 +96,8 @@ var webpackConfig = {
       template: 'src/index.html',
       filename: 'index_uwp.html',
       inject: true,
-      showErrors:true,
-      chunksSortMode: 'none',
+      showErrors: true,
+      chunksSortMode: 'dependency',
       buildTime: buildTime,
       baseScript: `<script>
                       var API_URL = 'http://localhost:8181/'
@@ -110,8 +107,8 @@ var webpackConfig = {
       template: 'src/index.html',
       filename: 'index_electron.html',
       inject: true,
-      showErrors:true,
-      chunksSortMode: 'none',
+      showErrors: true,
+      chunksSortMode: 'dependency',
       buildTime: buildTime,
       baseScript: `<script>
                       var API_URL = 'http://localhost:8181/'
@@ -120,15 +117,28 @@ var webpackConfig = {
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'defer'
     }),
-    new UglifyJsPlugin({
-      beautify: false, 
-      mangle: { screw_ie8 : true }, 
-      compress: { screw_ie8: true }, 
-      comments: false 
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
     }),
 
-    
-  ],
-};
 
-module.exports =  webpackConfig;
+    // new ClosureCompiler({
+    //   options: {
+    //     languageIn: 'ECMASCRIPT6',
+    //     languageOut: 'ECMASCRIPT5',
+    //     compilationLevel: 'ADVANCED',
+    //   },
+    // })
+    // new UglifyJsPlugin({
+    //     beautify: false,
+    //     mangle: { screw_ie8: true, keep_fnames: true },
+    //     compress: { screw_ie8: true },
+    //     comments: false
+    // }),
+
+
+
+  ],
+
+};

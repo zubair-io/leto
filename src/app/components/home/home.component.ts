@@ -1,12 +1,11 @@
 import {Component} from '@angular/core';
-import {TimeComponent} from '../time'
-import {ResponseTimeComponent} from '../responseTime'
+//import {TimeComponent} from '../time'
+//import {ResponseTimeComponent} from '../responseTime'
 
 @Component({
     selector: 'home',
     templateUrl: './home.html',
     styleUrls: ['./home.scss'],
-    directives: [TimeComponent, ResponseTimeComponent]
 
 })
 
@@ -35,3 +34,7 @@ export class HomeComponent {
 }
 
 
+export class Cats {
+    bob = 'Hockey'
+    constructor() { }
+}

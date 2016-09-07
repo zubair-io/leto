@@ -1,15 +1,13 @@
 {
   "compilerOptions": {
     "target": "es2015",
-    "module": "es2015",
+    "module": "es5",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "strictNullChecks": false,
-    "baseUrl": "./tmp/ts/",
-    "outDir": "./tmp/es6/",
     "lib": [
       "dom",
       "es6"
@@ -34,9 +32,6 @@
   "awesomeTypescriptLoaderOptions": {
     "forkChecker": true,
     "useWebpackText": true
-  },
-  "angularCompilerOptions":{
-    "googleClosureOutput": true
   },
   "compileOnSave": false,
   "buildOnSave": false,

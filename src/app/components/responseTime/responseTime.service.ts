@@ -1,7 +1,9 @@
-/// <reference path="../../../types/horizon/index.d.ts" />
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import * as Horizon from '@horizon/client';
+const Horizon = require('@horizon/client/dist/horizon.js')
+//declare var Horizon
+    
+
 declare var API_URL: string
 export class ResponseTimeService {
 
