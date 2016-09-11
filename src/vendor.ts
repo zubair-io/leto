@@ -10,8 +10,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 
 //Horizon
-//import '@horizon/client';
-require('@horizon/client/dist/horizon.js')
+import '@horizon/client';
 
 //Moment
 //import 'moment';

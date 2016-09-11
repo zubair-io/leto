@@ -9,6 +9,7 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const ClosureCompiler = require('google-closure-compiler-js').webpack;
 const BabiliPlugin = require("babili-webpack-plugin");
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 const buildTime = Date.now() + ' ' + new Date()
 const path = require('path');
@@ -117,9 +118,12 @@ module.exports = {
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'defer'
     }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false
+    // new webpack.LoaderOptionsPlugin({
+    //   minimize: true,
+    //   debug: false
+    // }),
+     new ServiceWorkerWebpackPlugin({
+      entry: path.join(__dirname, 'src/sw.js'),
     }),
 
 

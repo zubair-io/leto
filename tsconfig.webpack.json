@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "module": "es5",
+    "target": "es5",
+    "module": "es2015",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "strictNullChecks": false,
     "lib": [
@@ -26,7 +25,7 @@
   "exclude": [
     "node_modules",
     "dist",
-    "src"
+    "tmp"
 
   ],
   "awesomeTypescriptLoaderOptions": {
