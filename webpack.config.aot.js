@@ -39,7 +39,7 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         loader: 'babel', // 'babel-loader' is also a legal name to reference
         query: {
-          presets: ['latest']
+         // presets: ['latest']
         }
       },
       // {
@@ -101,7 +101,7 @@ module.exports = {
       chunksSortMode: 'dependency',
       buildTime: buildTime,
       baseScript: `<script>
-                      var API_URL = 'http://localhost:8181/'
+                      var API_URL = 'http://letojs.com/'
                   </script>`
     }),
     new HtmlWebpackPlugin({
@@ -112,16 +112,16 @@ module.exports = {
       chunksSortMode: 'dependency',
       buildTime: buildTime,
       baseScript: `<script>
-                      var API_URL = 'http://localhost:8181/'
+                      var API_URL = 'http://letojs.com/'
                   </script>`
     }),
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'defer'
     }),
-    // new webpack.LoaderOptionsPlugin({
-    //   minimize: true,
-    //   debug: false
-    // }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
      new ServiceWorkerWebpackPlugin({
       entry: path.join(__dirname, 'src/sw.js'),
     }),
@@ -131,15 +131,15 @@ module.exports = {
     //   options: {
     //     languageIn: 'ECMASCRIPT6',
     //     languageOut: 'ECMASCRIPT5',
-    //     compilationLevel: 'ADVANCED',
+    //     compilationLevel: 'SIMPLE',
     //   },
     // })
-    // new UglifyJsPlugin({
-    //     beautify: false,
-    //     mangle: { screw_ie8: true, keep_fnames: true },
-    //     compress: { screw_ie8: true },
-    //     comments: false
-    // }),
+    new UglifyJsPlugin({
+        beautify: false,
+        mangle: { screw_ie8: true },
+        compress: { screw_ie8: true },
+        comments: false
+    }),
 
 
 

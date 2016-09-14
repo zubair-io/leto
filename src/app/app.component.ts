@@ -13,3 +13,7 @@ export class AppComponent {
 
   
 }
+
+export class HelloWorld{
+    goodBye = 'The should get remove duing tree shaking'
+}

@@ -23,7 +23,7 @@ var electron = {
     ],
   },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(true)
+    new webpack.optimize.OccurrenceOrderPlugin(true)
   ],
   externals: checkNodeImport,
 

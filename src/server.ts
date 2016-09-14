@@ -1,54 +1,57 @@
 // the polyfills must be the first thing imported in node.js
-import 'angular2-universal/polyfills';
+import 'angular2-universal-polyfills';
 
 import * as path from 'path';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import * as compression from 'compression'
+import * as cookieParser from 'cookie-parser';
 
-let cookieParser = require('cookie-parser');
 let horizon = require('@horizon/server');
 
 // Angular 2
 import { enableProdMode } from '@angular/core';
 // Angular 2 Universal
-import { expressEngine } from 'angular2-universal';
+import { createEngine } from 'angular2-express-engine';
 
 // enable prod for faster renders
 enableProdMode();
 
 const app = express();
 const ROOT = path.join(path.resolve(__dirname, '..'));
-
+let  pageCache = new Map();
 // Express View
-app.engine('.html', expressEngine);
-app.set('views', path.join(__dirname, '../dist/www'));
+import { main } from './main.node';
+app.engine('.html', createEngine({ main }));
+app.set('views', path.join(ROOT, '../dist/www'));
 app.set('view engine', 'html');
-
-app.use(cookieParser('Angular 2 Universal'));
+app.set('view cache', true);
+//app.use(cookieParser('Angular 2 Universal'));
 app.use(bodyParser.json());
-app.use(compression())
 
 // Serve static files
 //app.use('/assets', express.static(path.join(__dirname, '../assets'), {maxAge: 30}));
-app.use(express.static(path.join(__dirname, '../dist/www'), { index: false }));
+console.log(
+  path.join(ROOT, '../dist/www')
+)
+app.use(express.static(path.join(ROOT, '../dist/www'), { index: false }));
 
+app.get('/', (req, res) => {
+      let url = req.originalUrl || '/';
 
-import { ngApp } from './main.node';
-// Routes with html5pushstate
-// ensure routes match client-side-app
-app.get('/', ngApp);
-app.get('/about', ngApp);
-app.get('/about/*', ngApp);
-app.get('/home', ngApp);
-app.get('/home/*', ngApp);
+       let html = pageCache.get( url );
+        if ( html !== undefined ){
+            res.setHeader('Cache-Control', 'public, max-age=300');
+            res.status(200).send(html);
+            return;
+        }
 
-// use indexFile over ngApp only when there is too much load on the server
-function indexFile(req, res) {
-  // when there is too much load on the server just send
-  // the index.html without prerendering for client-only
-  res.sendFile('/index.html', { root: path.join(__dirname, '../dist/www') });
-}
+  
+  res.render('index', {req, res}, (err, html)=>{
+    pageCache.set(url, html);
+    res.status(200).send(html);
+  })
+
+});
 
 app.get('*', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
