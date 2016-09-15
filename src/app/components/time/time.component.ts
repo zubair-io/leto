@@ -5,22 +5,26 @@ import * as moment from 'moment';
 @Component({
     selector: 'time',
     templateUrl: './time.html',
-    styleUrls: ['./time.css']
+    styleUrls: ['./time.scss']
 })
 
 export class TimeComponent implements OnInit {
 
-    time: string;
+    time = new Date()
 
     constructor() { }
     ngOnInit() {
-        setInterval(() => {
-            this.setTime();
-        }, 250)
+       
+         if (typeof (window) === 'object') {
+             setInterval(() => {
+                 this.setTime();
+             }, 250)
+        }
     }
 
     setTime() {
-        this.time = moment().format('MMMM Do YYYY, h:mm:ss a');
+        //this.time = moment().format('MMMM Do YYYY, h:mm:ss a');
+        this.time = new Date()
     }
 }
 

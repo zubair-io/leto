@@ -1,12 +1,11 @@
 import {Component} from '@angular/core';
-import {TimeComponent} from '../time'
-import {ResponseTimeComponent} from '../responseTime'
+//import {TimeComponent} from '../time'
+//import {ResponseTimeComponent} from '../responseTime'
 
 @Component({
     selector: 'home',
     templateUrl: './home.html',
-    styleUrls: ['./home.css'],
-    directives: [TimeComponent, ResponseTimeComponent]
+    styleUrls: ['./home.scss'],
 
 })
 
@@ -18,7 +17,9 @@ export class HomeComponent {
     constructor() { }
 
     ngOnInit() {
-        this.startWordshow()
+        if (typeof (window) === 'object') {
+            this.startWordshow()
+        }
     }
     startWordshow() {
         let nextWord = this.currentWord + 1
@@ -33,3 +34,7 @@ export class HomeComponent {
 }
 
 
+export class Cats {
+    bob = 'Hockey'
+    constructor() { }
+}

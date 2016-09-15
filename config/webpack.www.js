@@ -4,6 +4,7 @@ var DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
 var WebpackMd5Hash = require('webpack-md5-hash');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ScriptExtHtmlWebpackPlugin  = require('script-ext-html-webpack-plugin')
 var UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 
 var buildTime = Date.now() + ' ' + new Date() 
@@ -44,6 +45,11 @@ var webpackConfig = {
       // .ts files for TypeScript
       { test: /\.ts$/, loaders: ['awesome-typescript-loader', 'angular2-template-loader'] },
       { test: /\.css$/, loaders: ['to-string-loader', 'css-loader?-url'] },
+      {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        loaders: ['raw-loader', 'sass-loader'] 
+      },
       { test: /\.json$/, loader: 'json-loader' },
 
       {
@@ -79,7 +85,7 @@ var webpackConfig = {
       chunksSortMode: 'none',
       buildTime: buildTime,
       baseScript: `<script>
-              var API_URL = '/'
+                      var API_URL = '/'
                   </script>`
     }),
     new HtmlWebpackPlugin({
@@ -90,7 +96,7 @@ var webpackConfig = {
       chunksSortMode: 'none',
       buildTime: buildTime,
       baseScript: `<script>
-              var API_URL = 'http://localhost:8181/'
+                      var API_URL = 'http://localhost:8181/'
                   </script>`
     }),
     new HtmlWebpackPlugin({
@@ -101,9 +107,19 @@ var webpackConfig = {
       chunksSortMode: 'none',
       buildTime: buildTime,
       baseScript: `<script>
-              var API_URL = 'http://localhost:8181/'
+                      var API_URL = 'http://localhost:8181/'
                   </script>`
-    })
+    }),
+    new ScriptExtHtmlWebpackPlugin({
+      defaultAttribute: 'defer'
+    }),
+    // new UglifyJsPlugin({
+    //   beautify: false, 
+    //   mangle: { screw_ie8 : true }, 
+    //   compress: { screw_ie8: true }, 
+    //   comments: false 
+    // }),
+
     
   ],
 };

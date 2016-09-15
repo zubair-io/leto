@@ -1,11 +1,9 @@
 import {Component} from '@angular/core';
-import {ROUTER_DIRECTIVES} from '@angular/router'
 
 @Component({
     selector: 'app',
-   styleUrls: ['./app.css'],
+   styleUrls: ['./app.scss'],
   templateUrl: './app.html',
-    directives: [ROUTER_DIRECTIVES]
 
 })
 
@@ -16,4 +14,6 @@ export class AppComponent {
   
 }
 
-
+export class HelloWorld{
+    goodBye = 'The should get remove duing tree shaking'
+}

@@ -1,5 +1,4 @@
-
 declare module '@horizon/client' {
-     const Horizon
-     export = Horizon
+    const Horizon
+    export default Horizon
 }

@@ -5,7 +5,7 @@ import {ResponseTimeService} from './responseTime.service'
 @Component({
     selector: 'response-time',
     templateUrl: './responseTime.html',
-    styleUrls: ['./responseTime.css'],
+    styleUrls: ['./responseTime.scss'],
     providers: [ResponseTimeService]
 })
 
@@ -13,20 +13,28 @@ export class ResponseTimeComponent implements OnInit {
 
     responseTime: number;
     deleteId
+    retry= 5
 
 
     constructor(private _responseTimeService: ResponseTimeService) {
 
     }
     ngOnInit() {
-        this.getUser()
+        if (typeof (window) === 'object') {
+            this.getUser()
+        }
     }
-    getUser(){
-        console.log('g')
-        this._responseTimeService.getUser().subscribe((user)=>{
-            console.log(user)
-          this.getSpeed(user)
-          this.sendSpeed(user)
+    getUser() {
+        this._responseTimeService.getUser().subscribe((user) => {
+            this.getSpeed(user)
+            this.sendSpeed(user)
+        }, error=> {
+            this.retry--
+            console.log(error)
+            if(this.retry){
+                this._responseTimeService.reConnect()
+                this.getUser()
+            }
         })
     }
     getSpeed(user) {

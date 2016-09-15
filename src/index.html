@@ -15,7 +15,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="A TypeScript Framework, for building real-time appications">
-    <link href='https://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
 
     <!-- use http://www.favicon-generator.org/ to replace files in public/icon-->
     <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
@@ -40,9 +39,29 @@
 <body>
 
   <app>
-    Loading...
-  </app>
+<div style="
+    width: 15vw;
+    height: 15vw;
+    background: url(assets/leto.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin: 50px auto;
+    background-position: center;
+"></div> 
 
+ </app>
+<script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'Lato:300:latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
 
 
 </body>
