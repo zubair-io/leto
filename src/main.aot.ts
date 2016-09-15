@@ -9,6 +9,6 @@ enableProdMode();
 
 
 platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && !('require' in window) && !('Windows' in window)  ) {
   const registration = runtime.register();
 }

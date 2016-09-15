@@ -1,8 +1,7 @@
 'use strict';
 
 const electron = require('electron');
-const app = electron.app;  // Module to control application life.
-const BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
+const { app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 const http = require('http');
 const fs = require('fs');
@@ -25,8 +24,21 @@ app.on('window-all-closed', function() {
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1280, height: 1024});
+ let displays = electron.screen.getAllDisplays()
+  let d = displays.find((display) => {
+    return { width: display.bounds.width, height: display.bounds.height }
+  })
+  let minScreenWidth = 650;
+  let minScreenHeight = 450;
 
+  mainWindow = new BrowserWindow({
+    width: Math.max(minScreenWidth, ~~(d.bounds.width * 0.75)),
+    height: Math.max(minScreenHeight, ~~(d.bounds.height * 0.75)),
+    minWidth: minScreenWidth,
+    minHeight: minScreenHeight,
+    title: 'Leto'
+  })
+ 
   mainWindow.loadURL(`file://${ path.join(__dirname,  '../www/index_electron.html')}`)
 
   // Open the DevTools.

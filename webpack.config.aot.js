@@ -101,7 +101,7 @@ module.exports = {
       chunksSortMode: 'dependency',
       buildTime: buildTime,
       baseScript: `<script>
-                      var API_URL = 'http://letojs.com/'
+                      var API_URL = 'letojs.com'
                   </script>`
     }),
     new HtmlWebpackPlugin({
@@ -112,7 +112,7 @@ module.exports = {
       chunksSortMode: 'dependency',
       buildTime: buildTime,
       baseScript: `<script>
-                      var API_URL = 'http://letojs.com/'
+                      var API_URL = 'letojs.com'
                   </script>`
     }),
     new ScriptExtHtmlWebpackPlugin({

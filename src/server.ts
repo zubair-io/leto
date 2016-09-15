@@ -53,6 +53,11 @@ app.get('/', (req, res) => {
 
 });
 
+
+app.get('/ping', (req, res) => {   
+    res.status(200).send('ok');
+});
+
 app.get('*', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
   var pojo = { status: 404, message: 'No Content' };
