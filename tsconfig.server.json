@@ -12,14 +12,20 @@
       "es6"
     ],
     "types": [
-      "hammerjs",
       "jasmine",
-      "node",
       "protractor",
       "selenium-webdriver",
       "source-map",
       "uglify-js",
-      "webpack"
+      "webpack",
+      "body-parser",
+      "compression",
+      "cookie-parser",
+      "express",
+      "express-serve-static-core",
+      "mime",
+      "node",
+      "serve-static"
     ]
   },
   "exclude": [
