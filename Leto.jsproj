@@ -66,7 +66,6 @@
     <Content Include="dist\www\assets\icons\Square150x150Logo.scale-200.png" />
     <Content Include="dist\www\assets\icons\Square44x44Logo.scale-200.png" />
     <Content Include="dist\www\assets\icons\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="dist\www\assets\icons\StoreLogo.png" />
     <Content Include="dist\www\assets\icons\Wide310x150Logo.scale-200.png" />
     <!--<Content Include="dist\www\index.html" />-->
     <Content Include="dist\www\**" />
