@@ -4,7 +4,6 @@ import 'angular2-universal-polyfills';
 import * as path from 'path';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import * as cookieParser from 'cookie-parser';
 
 let horizon = require('@horizon/server');
 
@@ -18,35 +17,40 @@ enableProdMode();
 
 const app = express();
 const ROOT = path.join(path.resolve(__dirname, '..'));
-let  pageCache = new Map();
+let pageCache = new Map();
 // Express View
-import { main } from './main.node';
-app.engine('.html', createEngine({ main }));
+import { MainModule } from './main.node';
+app.engine('.html', createEngine());
 app.set('views', path.join(ROOT, '../dist/www'));
 app.set('view engine', 'html');
-app.set('view cache', true);
-//app.use(cookieParser('Angular 2 Universal'));
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 
 // Serve static files
-//app.use('/assets', express.static(path.join(__dirname, '../assets'), {maxAge: 30}));
+app.use('/assets', express.static(path.join(__dirname, '../assets'), {maxAge: 30}));
 console.log(
   path.join(ROOT, '../dist/www')
 )
 app.use(express.static(path.join(ROOT, '../dist/www'), { index: false }));
 
 app.get('/', (req, res) => {
-      let url = req.originalUrl || '/';
+  let url = req.originalUrl || '/';
 
-       let html = pageCache.get( url );
-        if ( html !== undefined ){
-            res.setHeader('Cache-Control', 'public, max-age=300');
-            res.status(200).send(html);
-            return;
-        }
+  let html = pageCache.get(url);
+  if (html !== undefined) {
+    res.setHeader('Cache-Control', 'public, max-age=300');
+    res.status(200).send(html);
+    return;
+  }
 
-  
-  res.render('index', {req, res}, (err, html)=>{
+  res.render('index', {
+    req,
+    res,
+    ngModule: MainModule,
+    preboot: false,
+    baseUrl: '/',
+    requestUrl: url,
+    originUrl: req.hostname
+  }, (err, html) => {
     pageCache.set(url, html);
     res.status(200).send(html);
   })
@@ -54,16 +58,11 @@ app.get('/', (req, res) => {
 });
 
 
-app.get('/ping', (req, res) => {   
-    res.status(200).send('ok');
+app.get('/ping', (req, res) => {
+  res.status(200).send('ok');
 });
 
-app.get('*', function (req, res) {
-  res.setHeader('Content-Type', 'application/json');
-  var pojo = { status: 404, message: 'No Content' };
-  var json = JSON.stringify(pojo, null, 2);
-  res.status(404).send(json);
-});
+
 
 // Server
 let http_server = app.listen(8181, () => {
@@ -75,7 +74,7 @@ let options = {
   permissions: false,
   auto_create_collection: true,
   auto_create_index: true,
-    auth: {
+  auth: {
     token_secret: '123',
     allow_anonymous: true,
   }

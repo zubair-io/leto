@@ -7,7 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
-const ClosureCompiler = require('google-closure-compiler-js').webpack;
+//const ClosureCompiler = require('').webpack;
 const BabiliPlugin = require("babili-webpack-plugin");
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 

@@ -8,6 +8,22 @@
     "sourceMap": true,
     "strictNullChecks": false
   },
+   "types": [
+      "jasmine",
+      "protractor",
+      "selenium-webdriver",
+      "source-map",
+      "uglify-js",
+      "webpack",
+      "body-parser",
+      "compression",
+      "cookie-parser",
+      "express",
+      "express-serve-static-core",
+      "mime",
+      "node",
+      "serve-static"
+    ],
   "exclude": [
     "typings/main.d.ts",
     "typings/main",
