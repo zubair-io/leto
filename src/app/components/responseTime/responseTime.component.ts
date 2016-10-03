@@ -13,6 +13,7 @@ export class ResponseTimeComponent implements OnInit {
 
     responseTime: number;
     deleteId
+    retry= 5
 
 
     constructor(private _responseTimeService: ResponseTimeService) {
@@ -27,6 +28,13 @@ export class ResponseTimeComponent implements OnInit {
         this._responseTimeService.getUser().subscribe((user) => {
             this.getSpeed(user)
             this.sendSpeed(user)
+        }, error=> {
+            this.retry--
+            console.log(error)
+            if(this.retry){
+                this._responseTimeService.reConnect()
+                this.getUser()
+            }
         })
     }
     getSpeed(user) {

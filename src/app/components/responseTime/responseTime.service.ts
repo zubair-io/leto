@@ -1,7 +1,8 @@
 /// <reference path="../../../types/horizon/index.d.ts" />
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import * as Horizon from '@horizon/client';
+import {default as Horizon} from '@horizon/client';
+
 declare var API_URL: string
 export class ResponseTimeService {
 
@@ -44,6 +45,10 @@ export class ResponseTimeService {
     }
     getUser(): Observable<[any]> {
         return this.horizon.currentUser().fetch()
+    }
+    reConnect(){
+        this.horizon.disconnect()
+        this.horizon.connect()
     }
 
 }

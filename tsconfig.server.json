@@ -1,14 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2015",
     "module": "commonjs",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "strictNullChecks": false
-  },
-   "types": [
+    "strictNullChecks": false,
+    "lib": [
+      "dom",
+      "es6"
+    ],
+    "types": [
       "jasmine",
       "protractor",
       "selenium-webdriver",
@@ -23,14 +26,13 @@
       "mime",
       "node",
       "serve-static"
-    ],
+    ]
+  },
   "exclude": [
-    "typings/main.d.ts",
-    "typings/main",
     "node_modules",
-    "rethinkdb_data",
     "dist",
     "tmp"
+
   ],
   "awesomeTypescriptLoaderOptions": {
     "forkChecker": true,
@@ -38,7 +40,5 @@
   },
   "compileOnSave": false,
   "buildOnSave": false,
-  "atom": {
-    "rewriteTsconfig": false
-  }
+  "atom": { "rewriteTsconfig": false }
 }

@@ -1,3 +1,8 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+//import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { platformUniversalDynamic } from 'angular2-universal';
+
 import { AppModule } from './app/app.module';
-platformBrowserDynamic().bootstrapModule(AppModule);
+//platformUniversalDynamic().bootstrapModule(AppModule);
+document.addEventListener('DOMContentLoaded', () => {
+  platformUniversalDynamic().bootstrapModule(AppModule);
+});
