@@ -65,3 +65,5 @@ npm-debug.log
 /bld
 *.jsproj.user
 /tmp
+
+.vscode
