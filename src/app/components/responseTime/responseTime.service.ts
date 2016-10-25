@@ -1,4 +1,3 @@
-/// <reference path="../../../types/horizon/index.d.ts" />
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {default as Horizon} from '@horizon/client';

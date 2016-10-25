@@ -7,9 +7,9 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
+    "declaration": false,
     "strictNullChecks": false,
-    "baseUrl": "./tmp/ts/",
-    "outDir": "./tmp/es6/",
+    "outDir": "./tmp/",
     "lib": [
       "dom",
       "es6"
@@ -18,25 +18,29 @@
       "hammerjs",
       "jasmine",
       "node",
-      "protractor",
-      "selenium-webdriver",
       "source-map",
       "uglify-js",
       "webpack"
     ]
   },
+   "files": [
+    "src/app/app.module.ts"
+  ],
   "exclude": [
     "node_modules",
-    "dist",
-    "src"
+    "dist"
 
+  ],
+    "include": [
+     "src/**/*.ts"
   ],
   "awesomeTypescriptLoaderOptions": {
     "forkChecker": true,
     "useWebpackText": true
   },
   "angularCompilerOptions":{
-    "googleClosureOutput": true
+    "googleClosureOutput": true,
+    "debug": true
   },
   "compileOnSave": false,
   "buildOnSave": false,

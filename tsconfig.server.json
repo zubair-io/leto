@@ -13,8 +13,6 @@
     ],
     "types": [
       "jasmine",
-      "protractor",
-      "selenium-webdriver",
       "source-map",
       "uglify-js",
       "webpack",
