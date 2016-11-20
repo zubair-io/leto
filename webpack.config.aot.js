@@ -13,6 +13,8 @@ const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const ngtools = require('@ngtools/webpack');
 const path = require('path');
 const buildTime = Date.now() + ' ' + new Date()
+const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin');
+
 const METADATA = {
 };
 
@@ -51,6 +53,7 @@ module.exports = {
         languageIn: 'ECMASCRIPT6',
         languageOut: 'ECMASCRIPT5',
         compilationLevel: 'SIMPLE',
+        warningLevel: 'QUIET'
       },
     }),
     
@@ -103,13 +106,18 @@ module.exports = {
       minimize: true,
       debug: false
     }),
+     new ContextReplacementPlugin(
+      // The (\\|\/) piece accounts for path separators in *nix and Windows
+      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+      path.join( __dirname, '/src/') // location of your src
+    ),
   ],
   module: {
     loaders: [
       { test: /\.scss$/, loaders: ['raw-loader', 'sass-loader'] },
       { test: /\.css$/, loader: 'raw-loader' },
       { test: /\.html$/, loader: 'raw-loader' ,  exclude: [path.join(__dirname, './src/index.html')]},
-      { test: /\.ts$/, loaders:['babel', '@ngtools/webpack'] }
+      { test: /\.ts$/, loaders:['babel', '@ngtools/webpack'], exclude:/\node.ts$/}
     ]
   },
   devServer: {

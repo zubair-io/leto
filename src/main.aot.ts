@@ -3,7 +3,7 @@ import { AppModuleNgFactory } from './app/app.module.ngfactory';
 import { enableProdMode } from '@angular/core';
 //import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 
-//enableProdMode();
+enableProdMode();
 
 
 

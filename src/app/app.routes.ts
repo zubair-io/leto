@@ -1,4 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
+import { ModuleWithProviders} from '@angular/core';
 import { HomeComponent } from './components/home/home.component';
 
 export const routes: Routes = [
@@ -8,4 +9,4 @@ export const routes: Routes = [
 ];
 
 
-export const routing = RouterModule.forRoot(routes);
+export const AppRouting = RouterModule.forRoot(routes);
