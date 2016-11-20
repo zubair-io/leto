@@ -5,16 +5,16 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "strictNullChecks": false,
     "lib": [
       "dom",
       "es6"
     ],
+    "typeRoots" : ["./src/types", "./node_modules/@types"],
     "types": [
       "jasmine",
-      "protractor",
-      "selenium-webdriver",
       "source-map",
       "uglify-js",
       "webpack",

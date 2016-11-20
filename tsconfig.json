@@ -22,11 +22,10 @@
       "express-serve-static-core",
       "mime",
       "node",
-      "serve-static"
+      "serve-static",
+      "moment"
     ],
   "exclude": [
-    "typings/main.d.ts",
-    "typings/main",
     "node_modules",
     "rethinkdb_data",
     "dist",

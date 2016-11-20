@@ -8,35 +8,46 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "strictNullChecks": false,
-    "baseUrl": "./tmp/ts/",
-    "outDir": "./tmp/es6/",
     "lib": [
       "dom",
       "es6"
-    ],
+    ], 
+    "typeRoots" : ["./src/types", "./node_modules/@types"],
     "types": [
       "hammerjs",
       "jasmine",
       "node",
-      "protractor",
-      "selenium-webdriver",
       "source-map",
       "uglify-js",
-      "webpack"
+      "webpack",
+      "horizon",
+      "serviceworker-webpack-plugin"
     ]
   },
+   "files": [
+    "src/app/app.module.ts"
+  ],
+  "include": [
+  ],
   "exclude": [
     "node_modules",
     "dist",
-    "src"
-
+    "src/**/*.spec.ts",
+    "src/**/*.node.ts",
+    "src/electron.ts",
+    "src/server.ts",
+    "src/main.ts",
+    "src/main.node.ts"
   ],
+    
   "awesomeTypescriptLoaderOptions": {
     "forkChecker": true,
     "useWebpackText": true
   },
   "angularCompilerOptions":{
-    "googleClosureOutput": true
+    "googleClosureOutput": true,
+    "debug": true
+
   },
   "compileOnSave": false,
   "buildOnSave": false,

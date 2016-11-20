@@ -1,4 +1,4 @@
-// the polyfills must be the first thing imported in node.js
+import './__2.1.1.workaround.ts';
 import 'angular2-universal-polyfills';
 
 import * as path from 'path';
@@ -20,7 +20,9 @@ const ROOT = path.join(path.resolve(__dirname, '..'));
 let pageCache = new Map();
 // Express View
 import { MainModule } from './main.node';
-app.engine('.html', createEngine());
+//app.engine('.html', createEngine());
+app.engine('.html', createEngine({ ngModule: MainModule, time: true }));
+
 app.set('views', path.join(ROOT, '../dist/www'));
 app.set('view engine', 'html');
 //app.use(bodyParser.json());
@@ -45,12 +47,13 @@ app.get('/', (req, res) => {
   res.render('index', {
     req,
     res,
-    ngModule: MainModule,
+    time: true,
     preboot: false,
     baseUrl: '/',
     requestUrl: url,
     originUrl: req.hostname
   }, (err, html) => {
+    console.log(err)
     pageCache.set(url, html);
     res.status(200).send(html);
   })
