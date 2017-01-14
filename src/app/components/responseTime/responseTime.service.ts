@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import {default as Horizon} from '@horizon/client';
+import * as Horizon from '@horizon/client';
 
 declare var API_URL: string
 export class ResponseTimeService {

@@ -1,55 +1,47 @@
 {
-  "compilerOptions": {
-    "target": "es2015",
-    "module": "es2015",
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
-    "strictNullChecks": false,
-    "lib": [
-      "dom",
-      "es6"
-    ], 
-    "typeRoots" : ["./src/types", "./node_modules/@types"],
-    "types": [
-      "hammerjs",
-      "jasmine",
-      "node",
-      "source-map",
-      "uglify-js",
-      "webpack",
-      "horizon",
-      "serviceworker-webpack-plugin"
-    ]
-  },
-   "files": [
-    "src/app/app.module.ts"
-  ],
-  "include": [
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "src/**/*.spec.ts",
-    "src/**/*.node.ts",
-    "src/electron.ts",
-    "src/server.ts",
-    "src/main.ts",
-    "src/main.node.ts"
-  ],
-    
-  "awesomeTypescriptLoaderOptions": {
-    "forkChecker": true,
-    "useWebpackText": true
-  },
-  "angularCompilerOptions":{
-    "googleClosureOutput": true,
-    "debug": true
-
-  },
-  "compileOnSave": false,
-  "buildOnSave": false,
-  "atom": { "rewriteTsconfig": false }
+    "compilerOptions": {
+        "target": "es5",
+        "module": "es2015",
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": true,
+        "strictNullChecks": false,
+        "typeRoots": [
+            "./src/types",
+            "./node_modules/@types"
+        ],
+        "lib": [
+            "dom",
+            "es6"
+        ],
+        "types": [
+            "uglify-js",
+            "webpack",
+            "zone.js",
+            "lodash",
+            "node"
+        ]
+    },
+  
+    "include": [
+            "./src/**/*.module.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ],
+    "awesomeTypescriptLoaderOptions": {
+        "forkChecker": true,
+        "useWebpackText": true
+    },
+    "angularCompilerOptions": {
+        "debug": false,
+        "trace": false,
+        "skipMetadataEmit" : true,
+        "annotateForClosureCompiler": true
+    },
+    "compileOnSave": false,
+    "buildOnSave": false
 }

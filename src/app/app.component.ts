@@ -1,19 +1,22 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'app',
-   styleUrls: ['./app.scss'],
-  templateUrl: './app.html',
+    styleUrls: ['./app.scss'],
+    templateUrl: './app.html',
 
 })
 
 export class AppComponent {
 
-    constructor() { }
-
   
+
+    constructor() {
+     
+    }
+
 }
 
-export class HelloWorld{
+export class HelloWorld {
     goodBye = 'The should get remove duing tree shaking'
 }
