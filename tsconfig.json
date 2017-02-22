@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "es2015",
     "target": "es5",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
@@ -24,7 +24,9 @@
       "zone.js",
       "lodash",
       "node",
-      "horizon"
+      "horizon",
+      "body-parser",
+      "auth0-js"
     ]
   },
   "exclude": [

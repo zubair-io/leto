@@ -21,7 +21,9 @@
             "webpack",
             "zone.js",
             "lodash",
-            "node"
+            "node",
+            "horizon",
+            "auth0-js"
         ]
     },
   

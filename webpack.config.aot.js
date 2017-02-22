@@ -8,7 +8,9 @@ const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const ngtools = require('@ngtools/webpack');
 const CompressionPlugin = require("compression-webpack-plugin");
 const BabiliPlugin = require("babili-webpack-plugin");
-
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
+const buildTime = Date.now()
 
 const config = {
     context: path.join(__dirname + '/src'),
@@ -31,7 +33,7 @@ const config = {
             { test: /\.scss$/, loaders: ['raw-loader', 'sass-loader'] },
             { test: /\.css$/, loader: 'raw-loader' },
             { test: /\.html$/, loader: 'raw-loader', exclude: [path.join(__dirname, './src/index.html')] },
-            { test: /\.ts$/, loaders: ['babel', '@ngtools/webpack'], exclude: /\node.ts$/ }
+            { test: /\.ts$/, loaders: ['@ngtools/webpack'], exclude: /\node.ts$/ }
 
         ]
     },
@@ -46,7 +48,10 @@ const config = {
         //     threshold: 0,
         //     minRatio: 0.8
         // }),
-        new ExtractTextPlugin("styles.[chunkhash].css"),
+        //new ExtractTextPlugin("styles.[chunkhash].css"),
+        new webpack.DefinePlugin({
+            'process.env.production': true
+        }),
         new ngtools.AotPlugin({
             tsConfigPath: './tsconfig.aot.json',
             entryModule: path.join(__dirname, 'src/app/app.module') + '#AppModule',
@@ -57,7 +62,6 @@ const config = {
         new webpack.LoaderOptionsPlugin({
             options: {
                 sassLoader: {
-                    includePaths: scssIncludes
                 },
                 context: __dirname
             }
@@ -68,6 +72,7 @@ const config = {
             root('./src')
 
         ),
+
         // new HtmlWebpackPlugin({
         //     template: path.join(__dirname + '/src/index.html'),
         //     inject: true,
@@ -108,16 +113,10 @@ const config = {
         }),
 
         new CopyWebpackPlugin([{
-            from: 'src/assets',
+            from: 'assets',
             to: 'assets'
 
         }]),
-        new UglifyJsPlugin({
-            beautify: false,
-            mangle: { screw_ie8: true },
-            compress: { screw_ie8: true },
-            comments: false
-        }),
         new ClosureCompiler({
             options: {
                 languageIn: 'ECMASCRIPT6',
@@ -126,7 +125,33 @@ const config = {
                 warningLevel: 'QUIET'
             },
         }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false,
+                screw_ie8: true,
+                conditionals: true,
+                unused: true,
+                comparisons: true,
+                sequences: true,
+                dead_code: true,
+                evaluate: true,
+                if_return: true,
+                join_vars: true,
+            },
+            output: {
+                comments: false,
+            },
+        }),
+
         new webpack.optimize.CommonsChunkPlugin({ name: ['main', 'vendor', 'polyfills'], minChunks: Infinity }),
+
+        new ServiceWorkerWebpackPlugin({
+            entry: path.join(__dirname, 'src/sw.js'),
+        }),
+        new ScriptExtHtmlWebpackPlugin({
+            defaultAttribute: 'defer'
+        }),
+
 
     ],
     output: {
@@ -147,12 +172,6 @@ const config = {
     },
 
 };
-
-
-
-
-
-
 
 function root(args) {
     args = Array.prototype.slice.call(arguments, 0);

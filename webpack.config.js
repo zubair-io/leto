@@ -1,9 +1,14 @@
-var webpack = require('webpack');
-var path = require('path');
-var webpackMerge = require('webpack-merge');
+const webpack = require('webpack');
+const path = require('path');
+const webpackMerge = require('webpack-merge');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const LiveReloadPlugin = require('webpack-livereload-plugin');
+const fs = require('fs')
+var privateKey = fs.readFileSync('host.key', 'utf8');
+var certificate = fs.readFileSync('host.crt', 'utf8');
+var credentials = { key: privateKey, cert: certificate };
 
 // Webpack Config
 var webpackConfig = {
@@ -17,10 +22,14 @@ var webpackConfig = {
 
   output: {
     publicPath: '',
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, './dist/www'),
   },
 
   plugins: [
+    new LiveReloadPlugin(credentials),
+    new webpack.DefinePlugin({
+      'process.env.production': false
+    }),
     new ExtractTextPlugin("styles.[chunkhash].css"),
     new webpack.ContextReplacementPlugin(
       // The (\\|\/) piece accounts for path separators in *nix and Windows
@@ -34,7 +43,9 @@ var webpackConfig = {
       template: path.join(__dirname + '/src/index.html'),
       inject: true,            baseScript: `<script>
                       var API_URL = 'letojs.com'
-                  </script>`
+                  </script>
+                  <script src="//localhost:35729/livereload.js"></script>
+`
     }),
     new CopyWebpackPlugin([{
       from: 'src/assets',
@@ -52,7 +63,7 @@ var webpackConfig = {
       { test: /\.ts$/, loaders:[
         'awesome-typescript-loader',
           'angular2-template-loader',
-          'angular2-router-loader'], exclude:/\node.ts$/}
+          ], exclude:/\node.ts$/}
     
     ]
   }
@@ -77,7 +88,8 @@ var defaultConfig = {
 
   devServer: {
     historyApiFallback: true,
-    watchOptions: { aggregateTimeout: 300, poll: 1000 }
+    watchOptions: { aggregateTimeout: 300, poll: 1000 },
+    port: 3000
   },
 
   node: {

@@ -1,9 +1,12 @@
-import './__2.1.1.workaround.ts';
 import 'angular2-universal-polyfills';
+import './__2.1.1.workaround.ts';
+import 'ts-helpers';
+const fs = require('fs');
+const cookie = require('cookie');
 
 import * as path from 'path';
 import * as express from 'express';
-import * as bodyParser from 'body-parser';
+require('dotenv').config()
 
 let horizon = require('@horizon/server');
 
@@ -16,25 +19,21 @@ import { createEngine } from 'angular2-express-engine';
 enableProdMode();
 
 const app = express();
-const ROOT = path.join(path.resolve(__dirname, '..'));
+const ROOT = path.join(path.resolve(__dirname));
 let pageCache = new Map();
 // Express View
 import { MainModule } from './main.node';
-//app.engine('.html', createEngine());
 app.engine('.html', createEngine({ ngModule: MainModule, time: true }));
 
-app.set('views', path.join(ROOT, '../dist/www'));
+app.set('views', path.join(ROOT, 'dist/www/'));
 app.set('view engine', 'html');
-//app.use(bodyParser.json());
 
-// Serve static files
-app.use('/assets', express.static(path.join(__dirname, '../assets'), {maxAge: 30}));
-console.log(
-  path.join(ROOT, '../dist/www')
-)
-app.use(express.static(path.join(ROOT, '../dist/www'), { index: false }));
+app.use('/assets', express.static(path.join(ROOT, 'assets'), { maxAge: 30 }));
+
+app.use(express.static(path.join(ROOT, 'dist/www/'), { index: false }));
 
 app.get('/', (req, res) => {
+
   let url = req.originalUrl || '/';
 
   let html = pageCache.get(url);
@@ -57,7 +56,6 @@ app.get('/', (req, res) => {
     pageCache.set(url, html);
     res.status(200).send(html);
   })
-
 });
 
 
@@ -66,10 +64,11 @@ app.get('/ping', (req, res) => {
 });
 
 
+let port = process.env.SSL_PORT|| 84443
 
 // Server
 let http_server = app.listen(8181, () => {
-  console.log('Listening on: http://localhost:8181');
+  console.log(`Listening on: http://localhost:${port}`);
 });
 
 let options = {
@@ -78,9 +77,28 @@ let options = {
   auto_create_collection: true,
   auto_create_index: true,
   auth: {
-    token_secret: '123',
+    token_secret: process.env.token || 'ayUAuX6S36CuOH240',
     allow_anonymous: true,
   }
 };
 
-horizon(http_server, options);
+
+var https = require('https');
+var privateKey = fs.readFileSync('host.key', 'utf8');
+var certificate = fs.readFileSync('host.crt', 'utf8');
+var credentials = { key: privateKey, cert: certificate };
+
+var httpsServer = https.createServer(credentials, app);
+let sslPort = process.env.SSL_PORT|| 8443
+httpsServer.listen(sslPort, () => {
+  console.log(`Listening on: http://localhost:${sslPort}`);
+
+});
+
+const horizonServer = horizon([http_server, httpsServer], options);
+if (process.env.AUTH0_id && process.env.AUTH0_secret && process.env.AUTH0_host) {
+  horizonServer.add_auth_provider(
+    horizon.auth.auth0,
+    { id: process.env.AUTH0_id, secret: process.env.AUTH0_secret, path: 'auth0', host: process.env.AUTH0_host }
+  );
+}
