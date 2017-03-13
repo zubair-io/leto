@@ -7,20 +7,24 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // Webpack Config
 var webpackConfig = {
-    context: path.join(__dirname + '/src'),
+    //context: path.join(__dirname + '/src'),
 
     target: 'electron',
-    entry: './electron',
+    entry: path.join(__dirname + '/src/electron.ts'),
 
 
     plugins: [
 
-      
+
     ],
 
     module: {
         loaders: [
-            { test: /\.ts$/, loaders: ['awesome-typescript-loader'] },
+            {
+                test: /\app.ts$/,
+                loader: 'awesome-typescript-loader',
+                exclude: [path.join(__dirname, './src/server.ts')]
+            },
             { test: /\.html$/, loader: 'raw-loader' },
             { test: /\.css$/, loader: 'raw-loader' },
             { test: /\.json$/, loader: 'raw-loader' }
@@ -34,7 +38,7 @@ var defaultConfig = {
 
 
     resolve: {
-        extensions: ['.ts', '.js'],
+     //   extensions: ['.ts', '.js'],
         modules: [path.resolve(__dirname, 'node_modules')]
     },
 

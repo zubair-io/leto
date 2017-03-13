@@ -31,14 +31,14 @@ var webpackConfig = {
       'process.env.production': false
     }),
     new ExtractTextPlugin("styles.[chunkhash].css"),
-    new webpack.ContextReplacementPlugin(
-      // The (\\|\/) piece accounts for path separators in *nix and Windows
-      /angular(\\|\/)core(\\|\/)src(\\|\/)linker/,
-      path.resolve(__dirname, './src'),
-      {
-        // your Angular Async Route paths relative to this root directory
-      }
-    ),
+    // new webpack.ContextReplacementPlugin(
+    //   // The (\\|\/) piece accounts for path separators in *nix and Windows
+    //   /angular(\\|\/)core(\\|\/)src(\\|\/)linker/,
+    //   path.resolve(__dirname, './src'),
+    //   {
+    //     // your Angular Async Route paths relative to this root directory
+    //   }
+    // ),
     new HtmlWebpackPlugin({
       template: path.join(__dirname + '/src/index.html'),
       inject: true,            baseScript: `<script>

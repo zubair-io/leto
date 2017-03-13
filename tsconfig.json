@@ -22,11 +22,9 @@
       "uglify-js",
       "webpack",
       "zone.js",
-      "lodash",
       "node",
       "horizon",
-      "body-parser",
-      "auth0-js"
+      "body-parser"
     ]
   },
   "exclude": [

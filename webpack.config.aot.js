@@ -117,14 +117,14 @@ const config = {
             to: 'assets'
 
         }]),
-        new ClosureCompiler({
-            options: {
-                languageIn: 'ECMASCRIPT6',
-                languageOut: 'ECMASCRIPT5',
-                compilationLevel: 'SIMPLE',
-                warningLevel: 'QUIET'
-            },
-        }),
+        // new ClosureCompiler({
+        //     options: {
+        //         languageIn: 'ECMASCRIPT6',
+        //         languageOut: 'ECMASCRIPT5',
+        //         compilationLevel: 'SIMPLE',
+        //         warningLevel: 'QUIET'
+        //     },
+        // }),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false,
@@ -145,9 +145,9 @@ const config = {
 
         new webpack.optimize.CommonsChunkPlugin({ name: ['main', 'vendor', 'polyfills'], minChunks: Infinity }),
 
-        new ServiceWorkerWebpackPlugin({
-            entry: path.join(__dirname, 'src/sw.js'),
-        }),
+        // new ServiceWorkerWebpackPlugin({
+        //     entry: path.join(__dirname, 'src/sw.js'),
+        // }),
         new ScriptExtHtmlWebpackPlugin({
             defaultAttribute: 'defer'
         }),

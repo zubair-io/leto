@@ -20,10 +20,8 @@
             "uglify-js",
             "webpack",
             "zone.js",
-            "lodash",
             "node",
-            "horizon",
-            "auth0-js"
+            "horizon"
         ]
     },
   
@@ -42,7 +40,7 @@
         "debug": false,
         "trace": false,
         "skipMetadataEmit" : true,
-        "annotateForClosureCompiler": true
+        "annotateForClosureCompiler": false
     },
     "compileOnSave": false,
     "buildOnSave": false

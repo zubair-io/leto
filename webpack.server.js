@@ -4,30 +4,31 @@ var webpackMerge = require('webpack-merge');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ngtools = require('@ngtools/webpack');
 
 // Webpack Config
 var webpackConfig = {
-  context: path.join(__dirname + '/src'),
+  // context: path.join(__dirname + '/src'),
 
 
   target: 'node',
-  entry: './server.ts',
+  entry: path.join(__dirname + '/src/server.ts'),
 
 
 
   plugins: [
+    new ngtools.AotPlugin({
+      tsConfigPath: './tsconfig.server.json',
+      skipCodeGeneration: false,
+      entryModule: path.join(__dirname + '/src/app/app.node.module#AppNodeModule')
+
+
+    }),
     new webpack.DefinePlugin({
       'process.env.production': true
     }),
     new ExtractTextPlugin("styles.[chunkhash].css"),
-    new webpack.ContextReplacementPlugin(
-      // The (\\|\/) piece accounts for path separators in *nix and Windows
-      /angular(\\|\/)core(\\|\/)src(\\|\/)linker/,
-      path.resolve(__dirname, './src'),
-      {
-        // your Angular Async Route paths relative to this root directory
-      }
-    ),
+
     new HtmlWebpackPlugin({
       template: path.join(__dirname + '/src/index.html'),
       inject: true, baseScript: `<script>
@@ -48,7 +49,8 @@ var webpackConfig = {
       { test: /\.css$/, loader: 'raw-loader' },
       { test: /\.html$/, loader: 'raw-loader', exclude: [path.join(__dirname, './src/index.html')] },
       {
-        test: /\.ts$/, loaders: ['angular2-template-loader', 'awesome-typescript-loader?configFileName=tsconfig.server.json'],
+        test: /\.ts$/,
+        loader: '@ngtools/webpack',
         exclude: [path.join(__dirname, './src/electron.ts')]
       }
     ]
@@ -84,9 +86,9 @@ var defaultConfig = {
     process: true,
     Buffer: true
   },
-  externals: includeClientPackages(
-    /@angularclass|@angular|angular2-|ng2-|ng-|@ng-|angular-|@ngrx|ngrx-|@angular2|ionic|@ionic|-angular2|-ng2|-ng/
-  ),
+  // externals: includeClientPackages(
+  //   /@angular|angular2-|ng2-|ng-|@ng-|angular-|@ngrx|ngrx-|@angular2|ionic|@ionic|-angular2|-ng2|-ng/
+  // ),
 
 
   //   node: {

@@ -25,8 +25,7 @@
       "express-serve-static-core",
       "mime",
       "node",
-      "serve-static",
-      "auth0-js"
+      "serve-static"
     ]
   },
   "exclude": [
@@ -43,6 +42,9 @@
     "useWebpackText": true,
     "silent":true
   },
+  "angularCompilerOptions": {
+  "genDir": "src/aot"
+},
   "compileOnSave": false,
   "buildOnSave": false,
   "atom": { "rewriteTsconfig": false }
