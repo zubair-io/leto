@@ -20,14 +20,20 @@ https://www.rethinkdb.com/
 ### Run Leto
 ``` bash
 npm start # starts app in dev mode
-node ./dist/server/server.[timestamp].js # starts server
+nodemon ./dist/server/server.js # starts server
 npm run electron # starts electron 
 open Leto.sln in Visual Stuio
 ```
 
+### Build Leto
+``` bash
+npm build # build server, www, and electron. Output /dist
+
+```
+
 
 ### Stack/Features
-* Angualr2
+* Angualr
 * Ahead-of-time (AoT) compilation
 * Server Sider Rendering (Angular Universal)
 * Webpack 2 with Tree Shaking
