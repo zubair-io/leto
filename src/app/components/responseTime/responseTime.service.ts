@@ -1,14 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import {default as Horizon} from '@horizon/client';
+import {Component, OnInit, Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import Horizon from '@horizon/client';
 
 declare var API_URL: string
+@Injectable()
 export class ResponseTimeService {
 
     horizon
     speed
     user
     settings
+    
 
     constructor() {
         if (typeof (window) === 'object') {
@@ -31,7 +33,7 @@ export class ResponseTimeService {
     addSpeed(user): Observable<[any]> {
         return this.speed.store({
             'owner': user.id,
-            datetime: Date.now(),
+            'datetime': performance.timing.navigationStart + performance.now(),
         })
 
     }

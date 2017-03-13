@@ -67,3 +67,7 @@ npm-debug.log
 /tmp
 
 .vscode
+
+.env
+
+*.userprefs

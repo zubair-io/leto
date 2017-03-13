@@ -1,15 +1,20 @@
-import { NgModule, NgZone }      from '@angular/core';
+import { NgModule, NgZone } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HomeComponent} from './components/home/home.component'
-import {ResponseTimeComponent} from './components/responseTime'
-import {TimeComponent} from './components/time'
-import { AppComponent,  AppRouting}  from './';
+import { AppRouting } from './';
+import { AppComponent } from './app.component';
+import { AppSharedModule } from './app.shared.module';
+
+
 
 @NgModule({
-  imports:      [ BrowserModule, AppRouting ],
-  declarations: [ AppComponent, HomeComponent, ResponseTimeComponent, TimeComponent ],
-  bootstrap:    [ AppComponent ],
-  providers: []
+  imports: [
+    AppSharedModule,
+    AppRouting,
+  ],
+  declarations: [],
+  bootstrap: [AppComponent],
+  providers: [
+  ]
 
 })
 export class AppModule { }

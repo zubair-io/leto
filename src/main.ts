@@ -1,8 +1,10 @@
-//import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { platformUniversalDynamic } from 'angular2-universal';
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
-//platformUniversalDynamic().bootstrapModule(AppModule);
-document.addEventListener('DOMContentLoaded', () => {
-  platformUniversalDynamic().bootstrapModule(AppModule);
-});
+
+if(process.env.production){
+    enableProdMode();
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule);

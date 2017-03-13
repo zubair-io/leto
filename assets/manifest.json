@@ -5,7 +5,6 @@
   "display": "fullscreen",
   "orientation": "any",
   "theme_color": "#ffffff",
-  "background_color": "#ffffff",
   "icons": [
     {
       "src": "/assets/icons/android-icon-36x36.png",

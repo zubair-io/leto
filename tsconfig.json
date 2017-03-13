@@ -1,43 +1,38 @@
 {
   "compilerOptions": {
+    "module": "es2015",
     "target": "es5",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "sourceMap": true,
-    "strictNullChecks": false
-  },
-   "types": [
-      "jasmine",
-      "protractor",
-      "selenium-webdriver",
-      "source-map",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": false,
+    "baseUrl": "./src",
+    "typeRoots" : [
+     "./src/types",
+     "./node_modules/@types"],
+    "paths": {
+    },
+    "lib": [
+      "dom",
+      "es6"
+    ],
+    "types": [
       "uglify-js",
       "webpack",
-      "body-parser",
-      "compression",
-      "cookie-parser",
-      "express",
-      "express-serve-static-core",
-      "mime",
+      "zone.js",
       "node",
-      "serve-static",
-      "moment"
-    ],
+      "horizon",
+      "body-parser"
+    ]
+  },
   "exclude": [
     "node_modules",
-    "rethinkdb_data",
-    "dist",
-    "tmp"
+    "dist"
   ],
   "awesomeTypescriptLoaderOptions": {
     "forkChecker": true,
     "useWebpackText": true
-  },
-  "compileOnSave": false,
-  "buildOnSave": false,
-  "atom": {
-    "rewriteTsconfig": false
   }
 }

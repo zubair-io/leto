@@ -31,13 +31,20 @@
   "exclude": [
     "node_modules",
     "dist",
-    "tmp"
+    "tmp",
+    "main.aot.ts",
+    "electron.ts",
+    "server-koa.ts"
 
   ],
   "awesomeTypescriptLoaderOptions": {
     "forkChecker": true,
-    "useWebpackText": true
+    "useWebpackText": true,
+    "silent":true
   },
+  "angularCompilerOptions": {
+  "genDir": "src/aot"
+},
   "compileOnSave": false,
   "buildOnSave": false,
   "atom": { "rewriteTsconfig": false }
