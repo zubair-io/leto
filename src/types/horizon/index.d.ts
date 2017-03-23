@@ -1,27 +1,29 @@
 declare module '@horizon/client' {
+    import { Observable } from 'rxjs';
+    import { WebSocketSubject } from "rxjs/observable/dom/WebSocketSubject";
 
-    import { Observable } from 'rxjs/Observable';
-
+import * as Horizon from '@horizon/client';
     namespace hz {
+        interface Feed {
+            watch(options?: { rawChanges: boolean }): Observable<any>;
+            fetch(): Observable<any>;
+        }
+
         type Bound = 'open' | 'closed';
         type Direction = 'ascending' | 'descending';
         type Primitive = boolean | number | string | Date;
-        type IdValue = Primitive | Primitive[] | { id: Primitive };
+        type IdValue = Primitive | Primitive[] | { id: Primitive } | any;
+        type WriteOp = Object | Object[];
 
-        interface TermBase {
-            watch(options?: { rawChanges: boolean }): TermBase;
-            fetch(): TermBase;
-
-            findAll(...values: IdValue[]): TermBase;
+        interface TermBase extends Feed {
             find(value: IdValue): TermBase;
+            findAll(...values: IdValue[]): TermBase;
 
-            order(fields: string[], direction?: Direction): TermBase;
+            order(fields: string, direction?: Direction): TermBase;
             limit(size: Number): TermBase;
             above(spec: any, bound?: Bound): TermBase;
             below(spec: any, bound?: Bound): TermBase;
         }
-
-        type WriteOp = Object | Object[];
 
         interface Collection extends TermBase {
             store(docs: WriteOp): Observable<any>;
@@ -29,16 +31,22 @@ declare module '@horizon/client' {
             insert(docs: WriteOp): Observable<any>;
             replace(docs: WriteOp): Observable<any>;
             update(docs: WriteOp): Observable<any>;
+
             remove(docs: IdValue): Observable<any>;
-            remove(docs: IdValue[]): Observable<any>;
+            removeAll(docs: IdValue[]): Observable<any>;
         }
 
-        interface User extends TermBase { }
+        interface User extends Feed {
+            fetch(): WebSocketSubject<any>;
+         }
 
         interface HorizonInstance {
             (name: string): Collection;
 
             currentUser(): User;
+
+            hasAuthToken(): boolean;
+            authEndpoint(name: string): Observable<string>;
 
             aggregate(aggs: any): TermBase;
             model(fn: Function): TermBase;
@@ -71,7 +79,14 @@ declare module '@horizon/client' {
         }
     }
 
-    var Horizon: hz.Horizon;
-    export default Horizon;
 
+    export type HorizonOptions = hz.HorizonOptions;
+    export type HorizonInstance = hz.HorizonInstance;
+    export type TermBase = hz.TermBase;
+    export type Collection = hz.Collection;
+    export type User = hz.User;
+    export type Horizon = hz.Horizon
+
+    export * from '@horizon/client';
+        
 }

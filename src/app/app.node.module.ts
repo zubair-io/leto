@@ -1,11 +1,12 @@
-import { AppComponent, AppRouting } from './';
+import { AppComponent } from './';
 import { NgModule, Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
 import { TimeComponent } from './components/time/time.component';
 import { ServerModule } from "@angular/platform-server";
 import { AppSharedModule } from './app.shared.module';
-import {APP_BASE_HREF} from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { CoreModule } from './app.core.module';
+import { APP_BASE_HREF } from "@angular/common";
 
 
 
@@ -14,10 +15,12 @@ import {APP_BASE_HREF} from '@angular/common';
   bootstrap: [AppComponent],
   declarations: [ ],
   imports: [
-    ServerModule,
-    FormsModule,
+    CoreModule.forRoot(),
     AppSharedModule,
+    ServerModule,
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: '/'}]
+  providers:[
+       { provide: APP_BASE_HREF, useValue: '/'}
+  ]
 })
 export class AppNodeModule { }
