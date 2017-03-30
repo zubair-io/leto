@@ -51,7 +51,15 @@
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(wf, s);
   })(); </script>
-
+<script>
+  if ('serviceWorker' in navigator) {
+  navigator
+    .serviceWorker
+    .register('/sw.bundle.js')
+    .then(() => console.log('SW installed'))
+    .catch(err => console.log('Error:', err));
+}
+</script>
 
 </body>
 

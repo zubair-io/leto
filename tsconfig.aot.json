@@ -39,8 +39,9 @@
     "angularCompilerOptions": {
         "debug": false,
         "trace": false,
-        "skipMetadataEmit" : true,
-        "annotateForClosureCompiler": false
+        "skipMetadataEmit" : false,
+        "annotateForClosureCompiler": true,
+        "annotationsAs": "static fields"
     },
     "compileOnSave": false,
     "buildOnSave": false

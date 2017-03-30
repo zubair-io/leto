@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const webpackMerge = require('webpack-merge');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const LiveReloadPlugin = require('webpack-livereload-plugin');
@@ -9,6 +8,9 @@ const fs = require('fs')
 var privateKey = fs.readFileSync('host.key', 'utf8');
 var certificate = fs.readFileSync('host.crt', 'utf8');
 var credentials = { key: privateKey, cert: certificate };
+//const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+const AngularServiceWorkerPlugin = require('@angular/service-worker/webpack').default;
+console.log(AngularServiceWorkerPlugin)
 
 // Webpack Config
 var webpackConfig = {
@@ -17,7 +19,7 @@ var webpackConfig = {
   entry: {
     'polyfills': './polyfills.ts',
     'vendor': './vendor.ts',
-    'main': './main.ts'
+    'main': './main.ts',
   },
 
   output: {
@@ -26,45 +28,46 @@ var webpackConfig = {
   },
 
   plugins: [
-    new LiveReloadPlugin(credentials),
+    //   new ServiceWorkerWebpackPlugin({
+    //         entry: path.join(__dirname, 'src/sw.js'),
+    // }),
     new webpack.DefinePlugin({
       'process.env.production': false
     }),
-    new ExtractTextPlugin("styles.[chunkhash].css"),
-    // new webpack.ContextReplacementPlugin(
-    //   // The (\\|\/) piece accounts for path separators in *nix and Windows
-    //   /angular(\\|\/)core(\\|\/)src(\\|\/)linker/,
-    //   path.resolve(__dirname, './src'),
-    //   {
-    //     // your Angular Async Route paths relative to this root directory
-    //   }
-    // ),
+
     new HtmlWebpackPlugin({
       template: path.join(__dirname + '/src/index.html'),
-      inject: true,            baseScript: `<script>
-                      var API_URL = 'letojs.com'
+      inject: false,
+      baseScript: `<script>
+                      var API_URL = '/'
                   </script>
                   <script src="//localhost:35729/livereload.js"></script>
 `
     }),
     new CopyWebpackPlugin([{
-      from: 'src/assets',
+      from: 'assets',
       to: 'assets'
     }]),
-
+    new LiveReloadPlugin(credentials),
+    new CopyWebpackPlugin([
+      { from: 'ngsw-manifest.json' },
+    ]),
+    new AngularServiceWorkerPlugin(),
   ],
 
   module: {
     loaders: [
-     
-       { test: /\.scss$/, loaders: ['raw-loader', 'sass-loader'] },
+
+      { test: /\.scss$/, loaders: ['raw-loader', 'sass-loader'] },
       { test: /\.css$/, loader: 'raw-loader' },
-      { test: /\.html$/, loader: 'raw-loader' ,  exclude: [path.join(__dirname, './src/index.html')]},
-      { test: /\.ts$/, loaders:[
-        'awesome-typescript-loader',
+      { test: /\.html$/, loader: 'raw-loader', exclude: [path.join(__dirname, './src/index.html')] },
+      {
+        test: /\.ts$/, loaders: [
+          'awesome-typescript-loader',
           'angular2-template-loader',
-          ], exclude:/\node.ts$/}
-    
+        ], exclude: /server.ts/
+      }
+
     ]
   }
 

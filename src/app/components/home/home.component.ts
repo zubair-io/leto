@@ -32,9 +32,3 @@ export class HomeComponent {
         }, this.timmer)
     }
 }
-
-
-export class Cats {
-    bob = 'Hockey'
-    constructor() { }
-}

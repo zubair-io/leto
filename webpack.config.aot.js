@@ -7,11 +7,13 @@ const ClosureCompiler = require('google-closure-compiler-js').webpack;
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const ngtools = require('@ngtools/webpack');
 const CompressionPlugin = require("compression-webpack-plugin");
-const BabiliPlugin = require("babili-webpack-plugin");
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const buildTime = Date.now()
-
+const ClosureCompilerPlugin = require('webpack-closure-compiler');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const AngularServiceWorkerPlugin = require('@angular/service-worker/webpack').default;
+console.log(AngularServiceWorkerPlugin)
 const config = {
     context: path.join(__dirname + '/src'),
     entry: {
@@ -23,7 +25,7 @@ const config = {
     // enable loading modules relatively
     resolve: {
         extensions: ['.ts', '.js'],
-        modules: [__dirname + "/src", "node_modules"]
+        //   modules: [__dirname + "/src", "node_modules"]
     },
 
     module: {
@@ -33,7 +35,15 @@ const config = {
             { test: /\.scss$/, loaders: ['raw-loader', 'sass-loader'] },
             { test: /\.css$/, loader: 'raw-loader' },
             { test: /\.html$/, loader: 'raw-loader', exclude: [path.join(__dirname, './src/index.html')] },
-            { test: /\.ts$/, loaders: ['@ngtools/webpack'], exclude: /\node.ts$/ }
+            { test: /\.ts$/, loaders: ['@ngtools/webpack'], exclude: /\node.ts$/ },
+            {
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
+                loader: 'babel-loader',
+                query: {
+                    presets: ['es2015']
+                }
+            }
 
         ]
     },
@@ -125,6 +135,17 @@ const config = {
         //         warningLevel: 'QUIET'
         //     },
         // }),
+        //  new ClosureCompilerPlugin({
+        //   compiler: {
+        //     language_in: 'ECMASCRIPT6',
+        //     language_out: 'ECMASCRIPT5',
+        //     compilation_level: 'ADVANCED'
+        //   },
+        //   concurrency: 3,
+        // }),
+        // new ServiceWorkerWebpackPlugin({
+        //     entry: path.join(__dirname, 'src/sw.js'),
+        // }),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false,
@@ -144,14 +165,24 @@ const config = {
         }),
 
         new webpack.optimize.CommonsChunkPlugin({ name: ['main', 'vendor', 'polyfills'], minChunks: Infinity }),
-
-        // new ServiceWorkerWebpackPlugin({
-        //     entry: path.join(__dirname, 'src/sw.js'),
-        // }),
         new ScriptExtHtmlWebpackPlugin({
             defaultAttribute: 'defer'
         }),
-
+        new CopyWebpackPlugin([
+            { from: 'ngsw-manifest.json' },
+        ]),
+        new AngularServiceWorkerPlugin(),
+        // new BundleAnalyzerPlugin({
+        //     analyzerMode: 'server',
+        //     analyzerHost: '127.0.0.1',
+        //     analyzerPort: 8888,
+        //     reportFilename: 'report.html',
+        //     openAnalyzer: true,
+        //     generateStatsFile: false,
+        //     statsFilename: 'stats.json',
+        //     statsOptions: null,
+        //     logLevel: 'info'
+        // }),
 
     ],
     output: {

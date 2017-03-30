@@ -2,12 +2,12 @@
 import '@angular/platform-browser';
 import '@angular/core';
 import '@angular/router';
-import '@angular/forms';
 
 // RxJS
 import 'rxjs/Observable'
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/switchMap'; 
 
 //Horizon
 import '@horizon/client';
@@ -16,3 +16,4 @@ import '@horizon/client';
 //import 'moment';
 
 
+import 'ng-rxjs-indexeddb';
